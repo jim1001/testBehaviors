@@ -40,8 +40,8 @@ command OpenApplication
   # Called after InitializeApplication.
   # Open UI stack
 
-  # Open the starter app sample window UI stack
-  go stack "LevureSampleWindow"
+  # Open the starter app
+  go stack "ui1"
 end OpenApplication
 
 
