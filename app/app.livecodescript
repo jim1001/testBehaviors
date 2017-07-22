@@ -1,33 +1,44 @@
-script "app"
+﻿script "app"
 
 command PreloadApplication
-  # Perform operations before stacks, extensions, and externals in app.yml are loaded.
-
+   # Perform operations before stacks, extensions, and externals in app.yml are loaded.
+--   set the stackFiles of stack "ui1" to levureAppFolder() & "/" & "ui/ui1/behaviors/stack_ui1_behavior.livecodescript"
+--   set the behavior of stack "ui1" to stack "stack_ui1_behavior"
 end PreloadApplication
 
 
 command InitializeApplication
-  # Called after script-only stacks, extensions, and externals in app.yml are loaded.
-  # Perform initialization operations before UI stack is opened.
-
-  # UNCOMMENT the code below to use Sublime Text external editor in development
-  -- if the environment is "development" then
-  --   levureLoadExternalEditorServer
-  -- end if
-
-  # UNCOMMENT the code below as well as the FirstRun command below to use a
-  # preference setting to trigger a FirstRun handler. You must configure the
-  # `preferences filename` setting `app.yml` to use preferences.
-  -- # If this the first time application has run on this computer, call FirstRun
-  -- # This method requires the preferences framework helper to be loaded.
-  -- if prefsGetPref("software build") is empty then
-  --   FirstRun
-  --   prefsSetPref "software build", levureAppGet("build")
-  -- end if
-
-  # Perform initialization operations every time application runs.
-
-  return true
+   # Called after script-only stacks, extensions, and externals in app.yml are loaded.
+   # Perform initialization operations before UI stack is opened.
+   local myPath, theStackFileIsLoaded
+   put levureAppFolder() & "/" & "ui/ui1/behaviors/stack_ui1_behavior.livecodescript" into myPath
+   set the stackFiles of stack "ui1" to myPath
+   put there is a stack myPath into theStackFileIsLoaded --checking existence of behavior stack loads it into memory if it exists
+   if theStackFileIsLoaded then
+      put "stack " & myPath & " is loaded"
+      set the behavior of stack "ui1" to stack "stack_ui1_behavior"
+   else
+      put "stack " & myPath & " not loaded"
+   end if
+   
+   # UNCOMMENT the code below to use Sublime Text external editor in development
+   -- if the environment is "development" then
+   --   levureLoadExternalEditorServer
+   -- end if
+   
+   # UNCOMMENT the code below as well as the FirstRun command below to use a
+   # preference setting to trigger a FirstRun handler. You must configure the
+   # `preferences filename` setting `app.yml` to use preferences.
+   -- # If this the first time application has run on this computer, call FirstRun
+   -- # This method requires the preferences framework helper to be loaded.
+   -- if prefsGetPref("software build") is empty then
+   --   FirstRun
+   --   prefsSetPref "software build", levureAppGet("build")
+   -- end if
+   
+   # Perform initialization operations every time application runs.
+   
+   return true
 end InitializeApplication
 
 
@@ -41,7 +52,8 @@ command OpenApplication
   # Open UI stack
 
   # Open the starter app
-  go stack "ui1"
+   go stack "ui1"
+   
 end OpenApplication
 
 
