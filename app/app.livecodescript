@@ -16,7 +16,7 @@ command InitializeApplication
    put there is a stack myPath into theStackFileIsLoaded --checking existence of behavior stack loads it into memory if it exists
    if theStackFileIsLoaded then
       put "stack " & myPath & " is loaded"
-      set the behavior of stack "ui1" to stack "stack_ui1_behavior"
+      set the behavior of stack "ui1" to the long id of stack "stack_ui1_behavior"
    else
       put "stack " & myPath & " not loaded"
    end if
